@@ -47,11 +47,18 @@ public class CuentaBancaria {
         if(saldo <= SALDOMINIMO){
             System.out.println("AVISO: Saldo en cuenta -50€, no puede realizar más retiradas de efectivo");
         }
-        else if(retirada - saldo < 0 && retirada - saldo > SALDOMINIMO){
+        else if(saldo - retirada < 0){
             System.out.println("AVISO: Saldo negativo");
-            saldo -= retirada;
-            movimientos[posicionMovimientos] = -retirada;
-            posicionMovimientos++;
+            if (saldo - retirada <= SALDOMINIMO) {                
+                movimientos[posicionMovimientos] = saldo;
+                saldo = SALDOMINIMO;
+                posicionMovimientos++;
+            } 
+            else {
+                saldo -= retirada;
+                movimientos[posicionMovimientos] = -retirada;
+                posicionMovimientos++;
+            }
         }
         else if(retirada>3000){
             System.out.println("AVISO: Notificación a Hacienda");
